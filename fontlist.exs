@@ -1,2 +1,5 @@
 IO.puts "Font List Script\n"
-System.cmd "fc-list", [], into: IO.stream(:stdio, :line)
+{fonts, retval} = System.cmd "fc-list", []
+fonts = String.split fonts, "\n"
+
+IO.inspect fonts
