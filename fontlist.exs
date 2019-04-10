@@ -4,4 +4,8 @@ Logger.info "Fetching list of system fonts..."
 {fonts, 0} = System.cmd "fc-list", []
 fonts = String.split fonts, "\n"
 
-IO.inspect fonts
+Logger.info "Parsing fonts..."
+for font <- fonts do
+  [path, family, style] = String.split font, ":"
+  Logger.debug "Font Path: " <> path <> "\nFamily: " <> family <> "\nStyle: " <> style
+end
