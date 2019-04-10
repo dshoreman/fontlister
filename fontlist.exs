@@ -11,7 +11,7 @@ defmodule Fonts do
 
   defp parse_fonts ({fonts, 0}) do
     fonts
-    |> String.replace(":style=", ":")
+    |> String.replace(~r/:(\s|style=)/, ":")
     |> String.split("\n", trim: true)
     |> Enum.map(fn font -> String.split(font, ":") |> map_font() end)
   end
