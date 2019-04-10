@@ -7,12 +7,16 @@ defmodule Fonts do
     fonts = "fc-list"
     |> System.cmd([], stderr_to_stdout: true)
     |> split_lines
-
-    Logger.info "Parsing fonts..."
-    for font <- fonts do
-      [path, family, style] = String.split font, ":"
-      Logger.debug "Font Path: " <> path <> "\nFamily: " <> family <> "\nStyle: " <> style
-    end
+    |> Enum.map(fn(font) ->
+      case String.split(font, ":") do
+        [path, family, styles] ->
+          Logger.debug("Found font '" <> family <> "' at " <> path <> "\n  Styles: " <> styles)
+          %{path: path, family: family, styles: styles}
+        [path, family] ->
+          Logger.debug("Found font '" <> family <> "' without styles at " <> path)
+          %{path: path, family: family, styles: ""}
+      end
+    end)
   end
 
   defp split_lines ({fonts, 0}) do
