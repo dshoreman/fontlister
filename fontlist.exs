@@ -4,9 +4,9 @@ defmodule Fonts do
   @doc "Get list of system fonts from Fontconfig"
   def list do
     Logger.info "Fetching list of system fonts..."
-    fonts = "fc-list"
+    "fc-list"
     |> System.cmd([], stderr_to_stdout: true)
-    |> split_lines
+    |> parse_fonts
     |> Enum.map(fn(font) ->
       case String.split(font, ":") do
         [path, family, styles] ->
@@ -19,11 +19,13 @@ defmodule Fonts do
     end)
   end
 
-  defp split_lines ({fonts, 0}) do
-    String.split(fonts, "\n")
+  defp parse_fonts ({fonts, 0}) do
+    fonts
+    |> String.replace(":style=", ":")
+    |> String.split("\n", trim: true)
   end
 
-  defp split_lines (_) do
+  defp parse_fonts (_) do
     raise "Failed to get font list."
   end
 end
