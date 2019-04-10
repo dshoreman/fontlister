@@ -13,6 +13,18 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>---</td>
+          <td style="font-family: serif">serif</td>
+        </tr>
+        <tr>
+          <td>---</td>
+          <td style="font-family: sans-serif">sans-serif</td>
+        </tr>
+        <tr>
+          <td>---</td>
+          <td style="font-family: monospace">monospace</td>
+        </tr>
         <%= for font <- fonts do %>
           <tr>
             <td><%= font.path %></td>
