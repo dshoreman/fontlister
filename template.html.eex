@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fonts Test</title>
+  </head>
+
+  <body>
+    <ul>
+      <%= for font <- fonts do %>
+        <li><%= font.family %></li>
+      <% end %>
+    </ul>
+  </body>
+</html>

@@ -21,14 +21,25 @@ defmodule Fonts do
   end
 
   defp map_font ([path, family, styles]) do
-    Logger.debug("Found font '#{family}' at #{path}\n  Styles: #{styles}")
     %{path: path, family: family, styles: styles}
   end
 
   defp map_font ([path, family]) do
-    Logger.debug("Found font '#{family}' without styles at #{path}")
     %{path: path, family: family, styles: ""}
+  end
+
+  def generate do
+    "template.html.eex"
+    |> EEx.eval_file(fonts: list())
+  end
+
+  def export do
+    "output.html"
+    |> Path.expand(__DIR__)
+    |> File.write!(generate())
+
+    Logger.info("Fonts test file saved! Now run `firefox --new-tab output.html`")
   end
 end
 
-Fonts.list()
+Fonts.export()
