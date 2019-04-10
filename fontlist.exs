@@ -13,12 +13,18 @@ defmodule Fonts do
     fonts
     |> String.replace(~r/:(\s|style=)/, ":")
     |> String.split("\n", trim: true)
-    |> Enum.map(fn font -> String.split(font, ":") |> map_font() end)
-    |> Enum.sort_by(&Map.fetch(&1, :family))
+    |> Enum.map(&font_string_to_map/1)
+    |> Enum.sort_by(& &1[:family])
   end
 
   defp parse_fonts (_) do
     raise "Failed to get font list."
+  end
+
+  defp font_string_to_map (font_string) do
+    font_string
+    |> String.split(":")
+    |> map_font()
   end
 
   defp map_font ([path, family, styles]) do
@@ -30,8 +36,14 @@ defmodule Fonts do
   end
 
   def generate do
-    "template.html.eex"
-    |> EEx.eval_file(fonts: list())
+    EEx.eval_file("template.html.eex", fonts: list(), family_style_parser: &parse_family_style/1)
+  end
+
+  defp parse_family_style(family) do
+    family
+    |> String.split(~r/,\s?/, trim: true)
+    |> Enum.map(&"'#{&1}'")
+    |> Enum.join(", ")
   end
 
   def export do
