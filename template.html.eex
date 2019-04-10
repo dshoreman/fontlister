@@ -5,10 +5,21 @@
   </head>
 
   <body>
-    <ul>
-      <%= for font <- fonts do %>
-        <li><%= font.family %></li>
-      <% end %>
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>System Path</th>
+          <th>Font Family</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for font <- fonts do %>
+          <tr>
+            <td><%= font.path %></td>
+            <td><%= font.family %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </body>
 </html>
