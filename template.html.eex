@@ -29,7 +29,7 @@
           <tr>
             <td><%= font.path %></td>
             <td>
-              <span style="font-family: '<%= font.family %>';">
+              <span style="font-family: <%= family_style_parser.(font.family) %>;">
                 <%= font.family %>
               </span>
             </td>
