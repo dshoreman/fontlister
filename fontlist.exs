@@ -14,6 +14,7 @@ defmodule Fonts do
     |> String.replace(~r/:(\s|style=)/, ":")
     |> String.split("\n", trim: true)
     |> Enum.map(fn font -> String.split(font, ":") |> map_font() end)
+    |> Enum.sort_by(&Map.fetch(&1, :family))
   end
 
   defp parse_fonts (_) do
